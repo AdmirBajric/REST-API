@@ -1,3 +1,4 @@
+// Course schema model
 const Sequelize = require("sequelize");
 
 module.exports = (sequelize) => {

@@ -1,5 +1,6 @@
+// load modules
 const { check, validationResult } = require("express-validator");
-
+// Express validator for user post - creating new user check
 const userValidation = () => {
   return [
     check("firstName")
@@ -22,7 +23,7 @@ const userValidation = () => {
       ),
   ];
 };
-
+// Express validator for course update check
 const courseValidationPut = () => {
   return [
     check("id")
@@ -39,7 +40,7 @@ const courseValidationPut = () => {
       .withMessage("Please provide value for 'userId'"),
   ];
 };
-
+// Express validator for course creating check
 const courseValidationPost = () => {
   return [
     check("title")
@@ -53,7 +54,7 @@ const courseValidationPost = () => {
       .withMessage("Please provide value for 'userId'"),
   ];
 };
-
+// Validate the validationResult
 const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -67,7 +68,7 @@ const validate = (req, res, next) => {
     return next();
   }
 };
-
+// Export modules
 module.exports = {
   userValidation,
   courseValidationPut,

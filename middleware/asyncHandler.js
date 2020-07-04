@@ -1,4 +1,4 @@
-// async handler
+// Handler function to wrap each route
 module.exports = function asyncHandler(cb) {
   return async (req, res, next) => {
     try {

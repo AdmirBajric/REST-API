@@ -1,3 +1,4 @@
+// load modules
 const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
@@ -12,6 +13,16 @@ const options = {
 const sequelize = new Sequelize(options);
 
 const models = {};
+
+// Test connection to the database
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("Connection to the database successful!");
+  } catch (error) {
+    console.error("Error connecting to the database: ", error);
+  }
+})();
 
 // Import all of the models.
 fs.readdirSync(path.join(__dirname, "models")).forEach((file) => {
@@ -30,7 +41,7 @@ Object.keys(models).forEach((modelName) => {
     models[modelName].associate(models);
   }
 });
-
+// Export the modules
 module.exports = {
   sequelize,
   Sequelize,

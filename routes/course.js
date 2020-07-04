@@ -1,3 +1,4 @@
+// load modules
 const express = require("express");
 const authMiddleware = require("../middleware/authenticate");
 const { models } = require("../db");
@@ -10,6 +11,7 @@ const asyncHandler = require("../middleware/asyncHandler");
 const { User, Course } = models;
 const router = express.Router();
 
+// Route that returns all courses
 router.get(
   "/courses",
   asyncHandler(async (req, res) => {
@@ -22,10 +24,14 @@ router.get(
         attributes: ["id", "firstName", "lastName", "emailAddress"],
       },
     });
-    res.status(200).json(courses);
+    if (courses.length > 0) {
+      res.status(200).json(courses);
+    } else {
+      res.status(404).json({ message: "No data found" });
+    }
   })
 );
-
+// Route that returns the required course
 router.get(
   "/courses/:id",
   asyncHandler(async (req, res) => {
@@ -38,10 +44,14 @@ router.get(
         attributes: ["id", "firstName", "lastName", "emailAddress"],
       },
     });
-    res.status(200).json({ course });
+    if (course) {
+      res.status(200).json({ course });
+    } else {
+      res.status(404).json({ message: "Course not exist" });
+    }
   })
 );
-
+// Route that creates a new course
 router.post(
   "/courses",
   courseValidationPost(),
@@ -57,7 +67,7 @@ router.post(
     }
   })
 );
-
+// Route that updates a single course
 router.put(
   "/courses/:id",
   courseValidationPut(),
@@ -85,7 +95,7 @@ router.put(
     }
   })
 );
-
+// Route that delete the single course
 router.delete(
   "/courses/:id",
   authMiddleware.authenticateUser,
@@ -113,5 +123,5 @@ router.delete(
     }
   })
 );
-
+// Export router module
 module.exports = router;

@@ -1,3 +1,4 @@
+// load modules
 const express = require("express");
 const authMiddleware = require("../middleware/authenticate");
 const { userValidation, validate } = require("../middleware/validate");
@@ -27,7 +28,7 @@ router.get(
   })
 );
 
-// Route that creates a new user.
+// Route that creates a new user
 router.post(
   "/users",
   userValidation(),
@@ -49,5 +50,5 @@ router.post(
     }
   })
 );
-
+// Export router module
 module.exports = router;
