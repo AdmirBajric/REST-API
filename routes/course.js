@@ -54,9 +54,9 @@ router.get(
 // Route that creates a new course
 router.post(
   "/courses",
+  authMiddleware.authenticateUser,
   courseValidationPost(),
   validate,
-  authMiddleware.authenticateUser,
   asyncHandler(async (req, res) => {
     try {
       const course = req.body;
@@ -70,9 +70,9 @@ router.post(
 // Route that updates a single course
 router.put(
   "/courses/:id",
+  authMiddleware.authenticateUser,
   courseValidationPut(),
   validate,
-  authMiddleware.authenticateUser,
   asyncHandler(async (req, res) => {
     try {
       const currentUser = req.currentUser.dataValues.id;
